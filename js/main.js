@@ -35,6 +35,18 @@ if ('IntersectionObserver' in window) {
   revealTargets.forEach((el) => observer.observe(el));
 }
 
+// Before/after gallery reveal
+document.querySelectorAll('[data-before-after]').forEach((tile) => {
+  const toggle = () => tile.classList.toggle('revealed');
+  tile.addEventListener('click', toggle);
+  tile.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      toggle();
+    }
+  });
+});
+
 // Contact form (front-end only placeholder — no backend wired up yet)
 const contactForm = document.getElementById('contact-form');
 const formNote = document.getElementById('form-note');
