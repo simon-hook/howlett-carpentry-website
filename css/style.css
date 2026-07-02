@@ -462,9 +462,9 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .testimonial-grid { grid-template-columns: 1fr; }
   .contact-inner { grid-template-columns: 1fr; }
-}
 
-@media (max-width: 720px) {
+  /* Collapses to the hamburger menu well above the ~790px the full nav
+     needs to fit, so it doesn't overflow on landscape phones (e.g. 736px). */
   .main-nav { display: none; }
   .nav-cta { display: none; }
   .nav-toggle { display: flex; }
@@ -481,7 +481,9 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
     gap: 18px;
     box-shadow: var(--shadow);
   }
+}
 
+@media (max-width: 720px) {
   .services-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: 1fr; }
   .section { padding: 64px 0; }
