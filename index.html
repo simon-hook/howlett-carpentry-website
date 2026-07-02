@@ -8,15 +8,14 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="images/icon-32.png">
   <link rel="apple-touch-icon" href="images/icon-180.png">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
   <header class="site-header" id="header">
     <div class="container header-inner">
       <a href="#home" class="logo">
-        <img src="images/logo.png" alt="Howlett Carpentry &amp; Joinery" class="logo-img"
-             onerror="this.replaceWith(Object.assign(document.createElement('span'), {className: 'logo-text-fallback', innerHTML: 'Howlett &lt;strong&gt;Carpentry&lt;/strong&gt;'}))">
+        <img src="images/logo.png" alt="Howlett Carpentry &amp; Joinery" class="logo-img">
       </a>
 
       <nav class="main-nav" id="main-nav">
@@ -157,30 +156,30 @@
         <p class="section-sub center">[Placeholder] Tap a real project below to compare before &amp; after. The rest are placeholder tiles until more photos come in.</p>
 
         <div class="gallery-grid">
-          <div class="gallery-item gallery-before-after revealed" data-before-after tabindex="0" role="button" aria-label="Click to compare the before and after photos of this garden room build">
-            <img class="ba-layer ba-before" src="images/gallery/project1-before.jpg" alt="Garden room build, before: empty patio slab in the garden">
-            <img class="ba-layer ba-after" src="images/gallery/project1-after.jpg" alt="Garden room build, after: finished cedar-clad garden room lit up at dusk">
+          <button type="button" class="gallery-item gallery-before-after revealed" data-before-after data-project="Garden room build" disabled>
+            <img class="ba-layer ba-before" src="images/gallery/project1-before.jpg" loading="lazy" decoding="async" alt="Garden room build, before: empty patio slab in the garden">
+            <img class="ba-layer ba-after" src="images/gallery/project1-after.jpg" loading="lazy" decoding="async" alt="Garden room build, after: finished cedar-clad garden room lit up at dusk">
             <span class="ba-sweep" aria-hidden="true"></span>
             <span class="ba-badge ba-badge-before">Before</span>
             <span class="ba-badge ba-badge-after">After</span>
             <span class="ba-hint">Tap to compare</span>
-          </div>
-          <div class="gallery-item gallery-before-after revealed" data-before-after tabindex="0" role="button" aria-label="Click to compare the before and after photos of this garden room build">
-            <img class="ba-layer ba-before" src="images/gallery/project2-before.jpg" alt="Garden room build, before: fenced patio slab prepared for building">
-            <img class="ba-layer ba-after" src="images/gallery/project2-after.jpg" alt="Garden room build, after: finished cedar-clad garden room with a living roof">
+          </button>
+          <button type="button" class="gallery-item gallery-before-after revealed" data-before-after data-project="Garden room with living roof" disabled>
+            <img class="ba-layer ba-before" src="images/gallery/project2-before.jpg" loading="lazy" decoding="async" alt="Garden room build, before: fenced patio slab prepared for building">
+            <img class="ba-layer ba-after" src="images/gallery/project2-after.jpg" loading="lazy" decoding="async" alt="Garden room build, after: finished cedar-clad garden room with a living roof">
             <span class="ba-sweep" aria-hidden="true"></span>
             <span class="ba-badge ba-badge-before">Before</span>
             <span class="ba-badge ba-badge-after">After</span>
             <span class="ba-hint">Tap to compare</span>
-          </div>
-          <div class="gallery-item gallery-before-after revealed" data-before-after tabindex="0" role="button" aria-label="Click to compare the before and after photos of this kitchen renovation">
-            <img class="ba-layer ba-before" src="images/gallery/project3-before.jpg" alt="Kitchen renovation, before: mid-installation with bare plaster and protected appliances">
-            <img class="ba-layer ba-after" src="images/gallery/project3-after.jpg" alt="Kitchen renovation, after: finished kitchen with island and fitted units">
+          </button>
+          <button type="button" class="gallery-item gallery-before-after revealed" data-before-after data-project="Kitchen renovation" disabled>
+            <img class="ba-layer ba-before" src="images/gallery/project3-before.jpg" loading="lazy" decoding="async" alt="Kitchen renovation, before: mid-installation with bare plaster and protected appliances">
+            <img class="ba-layer ba-after" src="images/gallery/project3-after.jpg" loading="lazy" decoding="async" alt="Kitchen renovation, after: finished kitchen with island and fitted units">
             <span class="ba-sweep" aria-hidden="true"></span>
             <span class="ba-badge ba-badge-before">Before</span>
             <span class="ba-badge ba-badge-after">After</span>
             <span class="ba-hint">Tap to compare</span>
-          </div>
+          </button>
           <div class="gallery-item g4"><span>Project Photo 4</span></div>
           <div class="gallery-item g5"><span>Project Photo 5</span></div>
           <div class="gallery-item g6"><span>Project Photo 6</span></div>
@@ -270,12 +269,12 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <img src="images/logo.png" alt="Howlett Carpentry &amp; Joinery" class="footer-logo">
+      <img src="images/logo.png" alt="Howlett Carpentry &amp; Joinery" class="footer-logo" loading="lazy" decoding="async">
       <p>&copy; <span id="year"></span> Howlett Carpentry &amp; Joinery. All rights reserved.</p>
       <p class="footer-note">[Placeholder site &mdash; content to be finalised]</p>
     </div>
   </footer>
 
-  <script src="js/main.js?v=2"></script>
+  <script src="js/main.js?v=3"></script>
 </body>
 </html>

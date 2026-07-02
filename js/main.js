@@ -35,16 +35,38 @@ if ('IntersectionObserver' in window) {
   revealTargets.forEach((el) => observer.observe(el));
 }
 
-// Before/after gallery reveal
+// Before/after gallery reveal. The buttons ship disabled in the HTML so they
+// aren't a dead, clickable-looking UI if this script never runs.
 document.querySelectorAll('[data-before-after]').forEach((tile) => {
-  const toggle = () => tile.classList.toggle('revealed');
-  tile.addEventListener('click', toggle);
-  tile.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      toggle();
-    }
+  const updateLabel = () => {
+    const showing = tile.classList.contains('revealed') ? 'after' : 'before';
+    const hidden = showing === 'after' ? 'before' : 'after';
+    tile.setAttribute(
+      'aria-label',
+      `${tile.dataset.project} — showing the ${showing} photo. Activate to show the ${hidden} photo.`
+    );
+  };
+  tile.addEventListener('click', () => {
+    tile.classList.toggle('revealed');
+    updateLabel();
   });
+  updateLabel();
+  tile.disabled = false;
+});
+
+// Brand-text fallback if the logo image fails to load (header and footer)
+document.querySelectorAll('.logo-img, .footer-logo').forEach((img) => {
+  const swap = () => {
+    const span = document.createElement('span');
+    span.className = 'logo-text-fallback';
+    span.innerHTML = 'Howlett <strong>Carpentry &amp; Joinery</strong>';
+    img.replaceWith(span);
+  };
+  if (img.complete && img.naturalWidth === 0) {
+    swap();
+  } else {
+    img.addEventListener('error', swap);
+  }
 });
 
 // Contact form (front-end only placeholder — no backend wired up yet)

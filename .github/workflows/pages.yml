@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      # Pre-merge preview trigger. Remove this line once the branch is merged:
+      # a push here deploys over the same live Pages site that main deploys to.
       - claude/howlett-carpentry-website-vk0zue
   workflow_dispatch:
 
