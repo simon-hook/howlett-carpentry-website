@@ -320,8 +320,6 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
   letter-spacing: 0.02em;
 }
 
-.g2 { background: linear-gradient(135deg, #c9793d, #a8602c); }
-.g3 { background: linear-gradient(135deg, #3b2a1e, #6b432b); }
 .g4 { background: linear-gradient(135deg, #a8602c, #8a5a37); }
 .g5 { background: linear-gradient(135deg, #6b432b, #3b2a1e); }
 .g6 { background: linear-gradient(135deg, #c9793d, #6b432b); }
