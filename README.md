@@ -1,6 +1,6 @@
-# Howlett Carpentry Website
+# Howlett Carpentry & Joinery Website
 
-A one-page site for Howlett Carpentry, built with plain HTML, CSS and JavaScript (no build step, no dependencies).
+A one-page site for Howlett Carpentry & Joinery, built with plain HTML, CSS and JavaScript (no build step, no dependencies).
 
 ## Running locally
 

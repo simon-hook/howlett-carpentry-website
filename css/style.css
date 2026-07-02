@@ -43,6 +43,12 @@ ul { list-style: none; }
 
 .section { padding: 96px 0; }
 
+/* Offsets anchor-link scrolling so section content doesn't land under the sticky header */
+.hero,
+.section {
+  scroll-margin-top: 97px;
+}
+
 .section-eyebrow {
   color: var(--accent-dark);
   font-weight: 700;
