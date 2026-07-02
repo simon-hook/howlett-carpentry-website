@@ -15,7 +15,8 @@
   <header class="site-header" id="header">
     <div class="container header-inner">
       <a href="#home" class="logo">
-        <img src="images/logo.png" alt="Howlett Carpentry &amp; Joinery" class="logo-img">
+        <img src="images/logo.png" alt="Howlett Carpentry &amp; Joinery" class="logo-img"
+             onerror="this.replaceWith(Object.assign(document.createElement('span'), {className: 'logo-text-fallback', innerHTML: 'Howlett &lt;strong&gt;Carpentry&lt;/strong&gt;'}))">
       </a>
 
       <nav class="main-nav" id="main-nav">
@@ -63,10 +64,8 @@
     <!-- ABOUT -->
     <section id="about" class="section about">
       <div class="container about-inner">
-        <div class="about-visual" aria-hidden="true">
-          <div class="wood-panel">
-            <img src="images/icon-180.png" alt="" width="90" height="90">
-          </div>
+        <div class="wood-panel" aria-hidden="true">
+          <img src="images/icon-180.png" alt="" width="90" height="90">
         </div>
         <div class="about-copy">
           <p class="section-eyebrow">About Us</p>
@@ -223,7 +222,7 @@
           </a>
         </div>
 
-        <form class="contact-form" id="contact-form" novalidate>
+        <form class="contact-form" id="contact-form">
           <div class="form-row">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>

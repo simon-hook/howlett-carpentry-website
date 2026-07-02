@@ -18,20 +18,22 @@ mainNav.querySelectorAll('a').forEach((link) => {
 const revealTargets = document.querySelectorAll(
   '.about-inner, .services-grid, .gallery-grid, .testimonial-grid, .contact-inner'
 );
-revealTargets.forEach((el) => el.classList.add('reveal'));
+if ('IntersectionObserver' in window) {
+  revealTargets.forEach((el) => el.classList.add('reveal'));
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.15 }
-);
-revealTargets.forEach((el) => observer.observe(el));
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+  revealTargets.forEach((el) => observer.observe(el));
+}
 
 // Contact form (front-end only placeholder — no backend wired up yet)
 const contactForm = document.getElementById('contact-form');

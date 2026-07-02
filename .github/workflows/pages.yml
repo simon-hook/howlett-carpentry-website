@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
+      - main
       - claude/howlett-carpentry-website-vk0zue
   workflow_dispatch:
 
@@ -17,14 +18,18 @@ concurrency:
 
 jobs:
   deploy:
+    # No `environment: github-pages` binding here: the auto-created environment's
+    # branch-protection rule only allows deploys from the default branch, which
+    # blocks this job while it's still also triggered from a feature branch (see
+    # the `branches` list above). Once the feature branch is deleted and only
+    # `main` remains as a trigger, this can be restored to get deployment-URL
+    # visibility in the repo's Environments tab.
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

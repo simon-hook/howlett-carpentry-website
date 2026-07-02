@@ -1,11 +1,9 @@
 /* ---------- Variables ---------- */
 :root {
   --wood-dark: #3b2a1e;
-  --wood: #6b432b;
   --wood-light: #8a5a37;
   --accent: #f4791f;
-  --accent-dark: #d4640f;
-  --charcoal: #58595b;
+  --accent-dark: #b8560f;
   --cream: #faf5ec;
   --cream-dark: #f0e6d6;
   --text: #2b2420;
@@ -130,6 +128,11 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
   height: 52px;
   width: auto;
 }
+.logo-text-fallback {
+  font-size: 1.15rem;
+  color: var(--wood-dark);
+}
+.logo-text-fallback strong { color: var(--accent-dark); }
 
 .main-nav {
   display: flex;
