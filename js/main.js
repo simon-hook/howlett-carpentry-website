@@ -14,6 +14,13 @@ if (preloader) {
   } else {
     window.addEventListener('load', hidePreloader);
   }
+  // Backstop in case 'load' never fires (a hung resource on a flaky connection)
+  setTimeout(() => preloader.classList.add('done'), 4000);
+  // iOS Safari can restore the page from the back/forward cache with the
+  // overlay re-shown and no new 'load' event — hide it immediately then
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) preloader.classList.add('done');
+  });
 }
 
 // Mobile nav toggle

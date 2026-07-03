@@ -8,7 +8,7 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="images/icon-32.png">
   <link rel="apple-touch-icon" href="images/icon-180.png">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
   <style>
     /* Preloader styles are inlined so the overlay is styled before the main
        stylesheet arrives (that's the moment it exists to cover). */
@@ -43,30 +43,35 @@
       overflow: hidden;
       position: relative;
     }
+    /* Determinate-looking fill that completes in step with the 1s minimum
+       display time (the overlay never hides before the bar reads "done") */
     .preloader-track::after {
       content: "";
       position: absolute;
-      top: 0;
-      left: -40%;
-      width: 40%;
-      height: 100%;
+      inset: 0;
       border-radius: 999px;
       background: #f4791f;
-      animation: preloader-sweep 1.1s ease-in-out infinite;
+      transform-origin: left center;
+      transform: scaleX(0);
+      animation: preloader-fill 1.05s cubic-bezier(0.4, 0, 0.3, 1) forwards;
     }
     @keyframes preloader-bob {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-7px); }
     }
-    @keyframes preloader-sweep {
-      to { left: 100%; }
+    @keyframes preloader-fill {
+      to { transform: scaleX(1); }
     }
     @keyframes preloader-timeout {
       to { opacity: 0; visibility: hidden; }
     }
     @media (prefers-reduced-motion: reduce) {
-      #preloader img, .preloader-track::after { animation: none; }
-      #preloader { transition-duration: 0.1s; animation-delay: 1.5s; }
+      /* No movement: logo still, bar shown already complete. The opacity
+         cross-fade stays — it's motion, not fading, that reduce-motion asks
+         to avoid — with a shorter no-JS timeout. */
+      #preloader img { animation: none; }
+      .preloader-track::after { animation: none; transform: scaleX(1); }
+      #preloader { animation-delay: 1.5s; }
     }
   </style>
   <noscript><style>#preloader { display: none; }</style></noscript>
@@ -341,6 +346,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=5"></script>
+  <script src="js/main.js?v=6"></script>
 </body>
 </html>
