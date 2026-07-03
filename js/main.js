@@ -138,10 +138,17 @@ if ('IntersectionObserver' in window) {
 // Before/after drag sliders. All interactive chrome stays hidden until this
 // runs (.ba-ready), so without JS the tiles are plain photos of the result.
 document.querySelectorAll('[data-ba-slider]').forEach((tile) => {
+  const beforeImg = tile.querySelector('.ba-before');
+  const divider = tile.querySelector('.ba-divider');
   let pos = 25;
+  // Writes literal values rather than a CSS custom property: calc()+var()
+  // inside clip-path is unreliable in iOS Safari.
   const setPos = (pct) => {
     pos = Math.min(100, Math.max(0, pct));
-    tile.style.setProperty('--ba-pos', pos + '%');
+    const clip = 'inset(0 ' + (100 - pos) + '% 0 0)';
+    beforeImg.style.clipPath = clip;
+    beforeImg.style.webkitClipPath = clip;
+    divider.style.left = pos + '%';
     tile.setAttribute('aria-valuenow', String(Math.round(pos)));
     tile.setAttribute('aria-valuetext', Math.round(pos) + '% of the before photo shown');
   };
