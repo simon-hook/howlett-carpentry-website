@@ -1,3 +1,15 @@
+// Preloader: fade out once the page has loaded. The inline CSS in index.html
+// carries a 5s timeout animation as a fallback if this script never runs.
+const preloader = document.getElementById('preloader');
+if (preloader) {
+  const hidePreloader = () => preloader.classList.add('done');
+  if (document.readyState === 'complete') {
+    hidePreloader();
+  } else {
+    window.addEventListener('load', hidePreloader);
+  }
+}
+
 // Mobile nav toggle
 const navToggle = document.getElementById('nav-toggle');
 const mainNav = document.getElementById('main-nav');
