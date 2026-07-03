@@ -1,8 +1,14 @@
-// Preloader: fade out once the page has loaded. The inline CSS in index.html
-// carries a 5s timeout animation as a fallback if this script never runs.
+// Preloader: fade out once the page has loaded, but never before it has been
+// on screen for a full second, so the branding registers even on fast
+// connections. The inline CSS in index.html carries a 5s timeout animation
+// as a fallback if this script never runs.
 const preloader = document.getElementById('preloader');
 if (preloader) {
-  const hidePreloader = () => preloader.classList.add('done');
+  const MIN_SHOW_MS = 1000;
+  const hidePreloader = () => {
+    const remaining = Math.max(0, MIN_SHOW_MS - performance.now());
+    setTimeout(() => preloader.classList.add('done'), remaining);
+  };
   if (document.readyState === 'complete') {
     hidePreloader();
   } else {
