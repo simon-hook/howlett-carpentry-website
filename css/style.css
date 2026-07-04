@@ -269,9 +269,9 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
   font-size: 1.8rem;
   font-family: Georgia, serif;
   color: var(--accent);
-  /* Steadies the layout while the count-up animation runs */
+  /* Steadies the digits while the count-up runs; main.js pins each stat's
+     final width before animating so the row doesn't reflow */
   font-variant-numeric: tabular-nums;
-  min-width: 3.2ch;
 }
 .hero-stats span { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
 
@@ -379,13 +379,20 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
 .ba-slider {
   position: relative;
   overflow: hidden;
+}
+
+/* JS-created interaction layer that carries the slider role and gestures;
+   without JS it doesn't exist, so inert tiles get no drag cursor */
+.ba-surface {
+  position: absolute;
+  inset: 0;
   /* Horizontal drags move the divider; vertical swipes still scroll the page */
   touch-action: pan-y;
   cursor: ew-resize;
 }
-.ba-slider:focus-visible {
+.ba-surface:focus-visible {
   outline: 3px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: -3px;
 }
 
 .ba-img {

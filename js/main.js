@@ -13,6 +13,9 @@ const startCounts = () => {
     const target = parseFloat(el.dataset.count);
     const decimals = parseInt(el.dataset.decimals || '0', 10);
     const suffix = el.dataset.suffix || '';
+    // The markup holds the final value right now — pin its rendered width so
+    // the row doesn't reflow as the counting number gains digits
+    el.style.minWidth = Math.ceil(el.getBoundingClientRect().width) + 'px';
     const DURATION_MS = 1400;
     const start = performance.now();
     const tick = (now) => {
@@ -177,6 +180,15 @@ document.querySelectorAll('[data-ba-slider]').forEach((tile) => {
   };
   const beforeBadgeClip = wrapForClip(tile.querySelector('.ba-badge-before'));
   const afterBadgeClip = wrapForClip(tile.querySelector('.ba-badge-after'));
+  // The slider role lives on a dedicated interaction surface rather than the
+  // tile: role="slider" makes every descendant presentational, so if the tile
+  // itself were the slider, the expand button inside it would vanish from the
+  // accessibility tree. The surface is JS-created, so without JS there is no
+  // drag cursor over an inert image either.
+  const surface = document.createElement('div');
+  surface.className = 'ba-surface';
+  tile.insertBefore(surface, tile.querySelector('.ba-expand'));
+
   let pos = 25;
   // Writes literal values rather than a CSS custom property: calc()+var()
   // inside clip-path is unreliable in iOS Safari.
@@ -191,41 +203,83 @@ document.querySelectorAll('[data-ba-slider]').forEach((tile) => {
     afterBadgeClip.style.clipPath = afterClip;
     afterBadgeClip.style.webkitClipPath = afterClip;
     divider.style.left = pos + '%';
-    tile.setAttribute('aria-valuenow', String(Math.round(pos)));
-    tile.setAttribute('aria-valuetext', Math.round(pos) + '% of the before photo shown');
+    surface.setAttribute('aria-valuenow', String(Math.round(pos)));
+    surface.setAttribute('aria-valuetext', Math.round(pos) + '% of the before photo shown');
   };
 
-  tile.setAttribute('role', 'slider');
-  tile.setAttribute('tabindex', '0');
-  tile.setAttribute('aria-label', tile.dataset.project + ': before and after comparison. Drag or use arrow keys.');
-  tile.setAttribute('aria-valuemin', '0');
-  tile.setAttribute('aria-valuemax', '100');
+  surface.setAttribute('role', 'slider');
+  surface.setAttribute('tabindex', '0');
+  surface.setAttribute('aria-label', tile.dataset.project + ': before and after comparison. Drag or use arrow keys.');
+  surface.setAttribute('aria-valuemin', '0');
+  surface.setAttribute('aria-valuemax', '100');
   setPos(25);
   tile.classList.add('ba-ready');
 
+  const markUsed = () => tile.classList.add('ba-used');
   const pctFromEvent = (event) => {
     const rect = tile.getBoundingClientRect();
     return ((event.clientX - rect.left) / rect.width) * 100;
   };
+
+  // Mouse drags start immediately. Touches wait until the gesture shows
+  // horizontal intent, so a page-scroll that merely starts on the tile
+  // doesn't yank the divider to the thumb; a clean tap still repositions.
   let dragging = false;
-  tile.addEventListener('pointerdown', (event) => {
-    if (event.target.closest('.ba-expand')) return;
-    dragging = true;
-    tile.classList.add('ba-used');
-    tile.setPointerCapture(event.pointerId);
-    setPos(pctFromEvent(event));
+  let pendingTouch = null;
+  // Capture can throw if the pointer has already gone inactive between
+  // events; losing capture just means a drag ends at the tile edge
+  const capture = (event) => {
+    try {
+      surface.setPointerCapture(event.pointerId);
+    } catch (ignored) { /* keep dragging uncaptured */ }
+  };
+  surface.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'mouse') {
+      dragging = true;
+      markUsed();
+      setPos(pctFromEvent(event));
+      capture(event);
+    } else {
+      pendingTouch = { x: event.clientX, y: event.clientY };
+    }
   });
-  tile.addEventListener('pointermove', (event) => {
-    if (dragging) setPos(pctFromEvent(event));
+  surface.addEventListener('pointermove', (event) => {
+    if (dragging) {
+      setPos(pctFromEvent(event));
+      return;
+    }
+    if (pendingTouch) {
+      const dx = Math.abs(event.clientX - pendingTouch.x);
+      const dy = Math.abs(event.clientY - pendingTouch.y);
+      if (dx > 6 && dx > dy) {
+        // Horizontal intent: take over the gesture
+        dragging = true;
+        pendingTouch = null;
+        markUsed();
+        setPos(pctFromEvent(event));
+        capture(event);
+      } else if (dy > 8 && dy > dx) {
+        // Vertical intent: it's a scroll, leave the divider alone
+        pendingTouch = null;
+      }
+    }
   });
   ['pointerup', 'pointercancel'].forEach((type) =>
-    tile.addEventListener(type, () => { dragging = false; })
+    surface.addEventListener(type, (event) => {
+      if (pendingTouch && type === 'pointerup') {
+        // A tap that never turned into a scroll or drag: jump to the tap point
+        markUsed();
+        setPos(pctFromEvent(event));
+      }
+      dragging = false;
+      pendingTouch = null;
+    })
   );
-  tile.addEventListener('keydown', (event) => {
+  surface.addEventListener('keydown', (event) => {
     const steps = { ArrowLeft: pos - 5, ArrowRight: pos + 5, Home: 0, End: 100 };
     if (event.key in steps) {
       event.preventDefault();
-      tile.classList.add('ba-used');
+      markUsed();
       setPos(steps[event.key]);
     }
   });
@@ -238,18 +292,42 @@ if (lightbox) {
   const lightboxClose = lightbox.querySelector('.lightbox-close');
   let lastFocused = null;
 
+  // Scroll lock that also works on iOS Safari, where overflow:hidden on the
+  // body doesn't stop touch scrolling: fix the body in place at the current
+  // offset, then restore the exact scroll position on close.
+  let savedScrollY = 0;
+  const lockScroll = () => {
+    savedScrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = -savedScrollY + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  };
+  const unlockScroll = () => {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    // scroll-behavior: smooth would animate the restore; bypass it
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, savedScrollY);
+    document.documentElement.style.scrollBehavior = '';
+  };
+
   const openLightbox = (src, alt) => {
     lightboxImg.src = src;
     lightboxImg.alt = alt;
     lightbox.hidden = false;
     lastFocused = document.activeElement;
     lightboxClose.focus();
-    document.body.style.overflow = 'hidden';
+    lockScroll();
   };
   const closeLightbox = () => {
     lightbox.hidden = true;
     lightboxImg.src = '';
-    document.body.style.overflow = '';
+    unlockScroll();
     if (lastFocused) lastFocused.focus();
   };
 
@@ -265,7 +343,15 @@ if (lightbox) {
     if (event.target === lightbox) closeLightbox();
   });
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
+    if (lightbox.hidden) return;
+    if (event.key === 'Escape') {
+      closeLightbox();
+    } else if (event.key === 'Tab') {
+      // Focus trap: the close button is the dialog's only focusable control,
+      // so Tab must not wander into the page behind the overlay
+      event.preventDefault();
+      lightboxClose.focus();
+    }
   });
 }
 

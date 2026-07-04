@@ -16,7 +16,7 @@ Then visit http://localhost:8000
 
 All business details (phone, email, address, hours, testimonials, about text, services) are **dummy placeholders** marked with `[Placeholder]`. Search the codebase for `[Placeholder]` and replace with real content before going live.
 
-The gallery's first three tiles are real before/after projects with a drag-to-compare slider — **don't remove those** (each is a `<div class="gallery-item ba-slider" data-ba-slider>` wired to `js/main.js`). To add another project, copy one of those blocks and swap the two image paths, alt text, and `data-project` name. The remaining `.gallery-item g4`–`g6` divs are colored placeholders to replace the same way.
+The gallery's first three tiles are real before/after projects with a drag-to-compare slider — **don't remove those** (each is a `<div class="gallery-item ba-slider" data-ba-slider>` wired to `js/main.js`). To add another project, copy one of those blocks and swap the two image paths, the alt text, the `data-project` name, and the expand button's `aria-label` (it names the project too). The remaining `.gallery-item g4`–`g6` divs are colored placeholders to replace the same way.
 
 ## Structure
 
