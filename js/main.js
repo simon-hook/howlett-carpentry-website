@@ -1,5 +1,3 @@
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 // Count-up hero stats. Starts when the preloader lifts so the animation isn't
 // spent behind the overlay. Static HTML already holds the final values, so
 // with JS off (or reduced motion) the numbers are simply correct.
@@ -7,14 +5,12 @@ let countsStarted = false;
 const startCounts = () => {
   if (countsStarted) return;
   countsStarted = true;
+  // Runs under prefers-reduced-motion too: a counting number is not the kind
+  // of spatial movement the setting exists to avoid.
   document.querySelectorAll('[data-count]').forEach((el) => {
     const target = parseFloat(el.dataset.count);
     const decimals = parseInt(el.dataset.decimals || '0', 10);
     const suffix = el.dataset.suffix || '';
-    if (prefersReducedMotion) {
-      el.textContent = target.toFixed(decimals) + suffix;
-      return;
-    }
     const DURATION_MS = 1400;
     const start = performance.now();
     const tick = (now) => {
@@ -95,9 +91,11 @@ if ('IntersectionObserver' in window) {
   revealTargets.forEach((el) => observer.observe(el));
 }
 
-// Pencil-line underline drawn under section headings as they come into view
+// Pencil-line underline drawn under section headings as they come into view.
+// Runs under prefers-reduced-motion too — a 64px line growing is too small to
+// be the vestibular-trigger kind of motion the setting targets.
 const headings = document.querySelectorAll('.section h2');
-if ('IntersectionObserver' in window && !prefersReducedMotion) {
+if ('IntersectionObserver' in window) {
   const headingObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
