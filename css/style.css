@@ -446,22 +446,33 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
 .ba-slider.ba-ready .ba-badge,
 .ba-slider.ba-ready .ba-hint { visibility: visible; }
 
+/* Caption chips, not buttons: squared corners, small and subtle. Each badge is
+   clipped by main.js to its own side of the divider, so it only shows over its
+   own photo and slides away under the divider line as you drag across it. */
 .ba-badge {
   position: absolute;
   top: 12px;
   z-index: 2;
-  background: rgba(0, 0, 0, 0.45);
-  color: rgba(255, 255, 255, 0.95);
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.7rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-weight: 700;
+  font-weight: 600;
   pointer-events: none;
 }
 .ba-badge-before { left: 12px; }
 .ba-badge-after { right: 12px; }
+
+/* Full-tile wrapper injected by main.js that carries each badge's clip */
+.ba-clip {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
 
 .ba-hint {
   position: absolute;

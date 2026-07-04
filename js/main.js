@@ -164,14 +164,32 @@ if ('IntersectionObserver' in window) {
 document.querySelectorAll('[data-ba-slider]').forEach((tile) => {
   const beforeImg = tile.querySelector('.ba-before');
   const divider = tile.querySelector('.ba-divider');
+  // Each badge goes inside a full-tile wrapper that carries the same clip as
+  // its photo, so labels only show over their own side of the divider.
+  // (clip-path percentages resolve against the clipped element's own box,
+  // which is why the tiny badge can't be clipped directly.)
+  const wrapForClip = (badge) => {
+    const wrapper = document.createElement('span');
+    wrapper.className = 'ba-clip';
+    badge.parentNode.insertBefore(wrapper, badge);
+    wrapper.appendChild(badge);
+    return wrapper;
+  };
+  const beforeBadgeClip = wrapForClip(tile.querySelector('.ba-badge-before'));
+  const afterBadgeClip = wrapForClip(tile.querySelector('.ba-badge-after'));
   let pos = 25;
   // Writes literal values rather than a CSS custom property: calc()+var()
   // inside clip-path is unreliable in iOS Safari.
   const setPos = (pct) => {
     pos = Math.min(100, Math.max(0, pct));
-    const clip = 'inset(0 ' + (100 - pos) + '% 0 0)';
-    beforeImg.style.clipPath = clip;
-    beforeImg.style.webkitClipPath = clip;
+    const beforeClip = 'inset(0 ' + (100 - pos) + '% 0 0)';
+    const afterClip = 'inset(0 0 0 ' + pos + '%)';
+    [beforeImg, beforeBadgeClip].forEach((el) => {
+      el.style.clipPath = beforeClip;
+      el.style.webkitClipPath = beforeClip;
+    });
+    afterBadgeClip.style.clipPath = afterClip;
+    afterBadgeClip.style.webkitClipPath = afterClip;
     divider.style.left = pos + '%';
     tile.setAttribute('aria-valuenow', String(Math.round(pos)));
     tile.setAttribute('aria-valuetext', Math.round(pos) + '% of the before photo shown');
