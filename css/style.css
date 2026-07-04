@@ -681,16 +681,31 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
 .radius-note {
   position: absolute;
   left: 50%;
-  bottom: 30px;
+  bottom: 22px;
   transform: translateX(-50%);
-  background: var(--wood-dark);
-  color: #fff;
-  font-size: 0.82rem;
-  font-weight: 600;
-  padding: 7px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 252, 246, 0.82);
+  color: var(--text-light);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 5px 13px;
   border-radius: 999px;
-  box-shadow: var(--shadow);
+  border: 1px solid rgba(184, 86, 15, 0.16);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
   white-space: nowrap;
+}
+/* little dashed ring echoing the radius circle */
+.radius-note::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--accent);
+  flex: none;
 }
 
 .areas-list h3 {
@@ -709,32 +724,30 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
 .area-chip {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  background: #fff;
-  border: 1px solid var(--cream-deep, #e8dcc7);
+  gap: 8px;
+  background: var(--cream);
   color: var(--text);
-  padding: 8px 14px;
+  padding: 7px 15px;
   border-radius: 999px;
   font-size: 0.92rem;
-  box-shadow: 0 2px 8px rgba(43, 32, 20, 0.05);
 }
 .area-chip::before {
   content: "";
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--accent);
+  opacity: 0.75;
   flex: none;
 }
 .area-chip.hub {
-  background: var(--wood-dark);
-  color: #fff;
-  border-color: var(--wood-dark);
-  font-weight: 600;
+  background: rgba(244, 121, 31, 0.12);
+  color: var(--accent-dark);
+  font-weight: 700;
 }
 .area-chip.hub::before {
-  background: var(--accent);
-  box-shadow: 0 0 0 3px rgba(244, 121, 31, 0.25);
+  opacity: 1;
+  box-shadow: 0 0 0 3px rgba(244, 121, 31, 0.18);
 }
 
 .areas-note {
