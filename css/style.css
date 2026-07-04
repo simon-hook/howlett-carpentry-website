@@ -446,12 +446,12 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
 .ba-slider.ba-ready .ba-badge,
 .ba-slider.ba-ready .ba-hint { visibility: visible; }
 
-/* Caption chips, not buttons: squared corners, small and subtle. Each badge is
-   clipped by main.js to its own side of the divider, so it only shows over its
-   own photo and slides away under the divider line as you drag across it. */
-.ba-badge {
+/* Caption chips, not buttons: one shared style for the badges and the hint.
+   Each badge is clipped by main.js to its own side of the divider, so it only
+   shows over its own photo and slides away as you drag across it. */
+.ba-badge,
+.ba-hint {
   position: absolute;
-  top: 12px;
   z-index: 2;
   background: rgba(0, 0, 0, 0.4);
   color: rgba(255, 255, 255, 0.92);
@@ -463,6 +463,7 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
   font-weight: 600;
   pointer-events: none;
 }
+.ba-badge { top: 12px; }
 .ba-badge-before { left: 12px; }
 .ba-badge-after { right: 12px; }
 
@@ -475,18 +476,12 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
 }
 
 .ba-hint {
-  position: absolute;
   bottom: 12px;
-  right: 14px;
-  z-index: 2;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(0, 0, 0, 0.35);
-  padding: 4px 10px;
-  border-radius: 999px;
-  pointer-events: none;
+  right: 12px;
+  transition: opacity 0.4s ease;
 }
+/* The instruction has done its job once the slider has been used */
+.ba-slider.ba-used .ba-hint { opacity: 0; }
 
 .ba-expand {
   position: absolute;

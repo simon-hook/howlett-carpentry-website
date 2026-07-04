@@ -211,6 +211,7 @@ document.querySelectorAll('[data-ba-slider]').forEach((tile) => {
   tile.addEventListener('pointerdown', (event) => {
     if (event.target.closest('.ba-expand')) return;
     dragging = true;
+    tile.classList.add('ba-used');
     tile.setPointerCapture(event.pointerId);
     setPos(pctFromEvent(event));
   });
@@ -224,6 +225,7 @@ document.querySelectorAll('[data-ba-slider]').forEach((tile) => {
     const steps = { ArrowLeft: pos - 5, ArrowRight: pos + 5, Home: 0, End: 100 };
     if (event.key in steps) {
       event.preventDefault();
+      tile.classList.add('ba-used');
       setPos(steps[event.key]);
     }
   });
