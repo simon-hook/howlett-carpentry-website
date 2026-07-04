@@ -385,6 +385,9 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
 .ba-slider {
   position: relative;
   overflow: hidden;
+  /* Warm placeholder shown while the photos are still downloading, so a
+     loading tile reads as intentional rather than broken/blank. */
+  background: linear-gradient(135deg, #a8602c, #6b432b);
 }
 
 /* JS-created interaction layer that carries the slider role and gestures;

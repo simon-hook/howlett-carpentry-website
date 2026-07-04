@@ -18,6 +18,8 @@ All business details (phone, email, address, hours, testimonials, about text, se
 
 The gallery's first three tiles are real before/after projects with a drag-to-compare slider — **don't remove those** (each is a `<div class="gallery-item ba-slider" data-ba-slider>` wired to `js/main.js`). To add another project, copy one of those blocks and swap the two image paths, the alt text, the `data-project` name, and the expand button's `aria-label` (it names the project too). The remaining `.gallery-item g4`–`g6` divs are colored placeholders to replace the same way.
 
+**Keep gallery photos small.** They load on mobile data, so resize each to ~800px wide and save as a progressive JPEG (quality ~70) before adding it — roughly 50–110 KB per image. When you replace an existing photo at the same filename, bump its `?v=N` query in `index.html` so returning visitors fetch the new file instead of the cached one.
+
 ## Structure
 
 - `index.html` — page markup/content
