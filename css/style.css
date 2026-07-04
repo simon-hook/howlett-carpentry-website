@@ -316,7 +316,12 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
 .about-copy p { margin-bottom: 16px; color: var(--text-light); }
 
 /* ---------- Services ---------- */
-.services { background: var(--cream-dark); }
+/* Subtle tonal alternation between the dark hero and dark footer bookends:
+   about cream / services deeper / gallery cream / testimonials deeper /
+   faq cream / contact deeper. */
+.services,
+.testimonials,
+.contact { background: var(--cream-dark); }
 
 .services-grid {
   margin-top: 48px;
