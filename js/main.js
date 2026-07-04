@@ -166,6 +166,7 @@ if ('IntersectionObserver' in window) {
 // runs (.ba-ready), so without JS the tiles are plain photos of the result.
 document.querySelectorAll('[data-ba-slider]').forEach((tile) => {
   const beforeImg = tile.querySelector('.ba-before');
+  const afterImg = tile.querySelector('.ba-after');
   const divider = tile.querySelector('.ba-divider');
   // Each badge goes inside a full-tile wrapper that carries the same clip as
   // its photo, so labels only show over their own side of the divider.
@@ -213,7 +214,26 @@ document.querySelectorAll('[data-ba-slider]').forEach((tile) => {
   surface.setAttribute('aria-valuemin', '0');
   surface.setAttribute('aria-valuemax', '100');
   setPos(25);
-  tile.classList.add('ba-ready');
+
+  // Reveal the divider, badges and before-photo strip only once BOTH photos
+  // have loaded. Otherwise a still-loading before image shows the after photo
+  // through its clip region, then visibly swaps when it finally arrives.
+  const whenLoaded = (img) =>
+    (img.complete && img.naturalWidth > 0)
+      ? Promise.resolve()
+      : new Promise((resolve) => {
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+        });
+  let revealed = false;
+  const reveal = () => {
+    if (revealed) return;
+    revealed = true;
+    tile.classList.add('ba-ready');
+  };
+  Promise.all([whenLoaded(beforeImg), whenLoaded(afterImg)]).then(reveal);
+  // Backstop: never leave the split hidden if a load event is somehow missed.
+  setTimeout(reveal, 6000);
 
   const markUsed = () => tile.classList.add('ba-used');
   const pctFromEvent = (event) => {

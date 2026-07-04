@@ -419,6 +419,10 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
 .ba-before {
   -webkit-clip-path: inset(0 75% 0 0);
   clip-path: inset(0 75% 0 0);
+  /* Hidden until both photos have loaded (main.js adds .ba-ready), so a
+     not-yet-loaded before image never reveals the after photo through its
+     clip region and then visibly swaps. */
+  opacity: 0;
 }
 
 .ba-divider {
@@ -461,6 +465,7 @@ h3 { font-size: 1.2rem; margin-bottom: 8px; }
 .ba-slider.ba-ready .ba-divider,
 .ba-slider.ba-ready .ba-badge,
 .ba-slider.ba-ready .ba-hint { visibility: visible; }
+.ba-slider.ba-ready .ba-before { opacity: 1; }
 
 /* Caption chips, not buttons: one shared style for the badges and the hint.
    Each badge is clipped by main.js to its own side of the divider, so it only
