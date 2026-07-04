@@ -1,6 +1,8 @@
-// Count-up hero stats. Starts when the preloader lifts so the animation isn't
-// spent behind the overlay. Static HTML already holds the final values, so
-// with JS off (or reduced motion) the numbers are simply correct.
+// Count-up hero stats. Starts only once BOTH are true: the preloader has
+// lifted (so the animation isn't spent behind the overlay) and the stats are
+// actually on screen (on phones they start below the fold, and an animation
+// nobody sees is a missed animation). Static HTML already holds the final
+// values, so with JS off the numbers are simply correct.
 let countsStarted = false;
 const startCounts = () => {
   if (countsStarted) return;
@@ -23,6 +25,28 @@ const startCounts = () => {
   });
 };
 
+let preloaderLifted = false;
+let statsInView = false;
+const maybeStartCounts = () => {
+  if (preloaderLifted && statsInView) startCounts();
+};
+const statsEl = document.querySelector('.hero-stats');
+if (statsEl && 'IntersectionObserver' in window) {
+  const statsObserver = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        statsInView = true;
+        statsObserver.disconnect();
+        maybeStartCounts();
+      }
+    },
+    { threshold: 0.5 }
+  );
+  statsObserver.observe(statsEl);
+} else {
+  statsInView = true;
+}
+
 // Preloader: fade out once the page has loaded, but never before it has been
 // on screen for a full second, so the branding registers even on fast
 // connections. The inline CSS in index.html carries a 5s timeout animation
@@ -32,7 +56,8 @@ if (preloader) {
   const MIN_SHOW_MS = 1000;
   const finish = () => {
     preloader.classList.add('done');
-    startCounts();
+    preloaderLifted = true;
+    maybeStartCounts();
   };
   const hidePreloader = () => {
     const remaining = Math.max(0, MIN_SHOW_MS - performance.now());
@@ -51,7 +76,8 @@ if (preloader) {
     if (event.persisted) finish();
   });
 } else {
-  startCounts();
+  preloaderLifted = true;
+  maybeStartCounts();
 }
 
 // Mobile nav toggle
