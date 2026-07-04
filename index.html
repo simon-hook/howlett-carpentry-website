@@ -8,7 +8,7 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="images/icon-32.png">
   <link rel="apple-touch-icon" href="images/icon-180.png">
-  <link rel="stylesheet" href="css/style.css?v=16">
+  <link rel="stylesheet" href="css/style.css?v=17">
   <style>
     /* Preloader styles are inlined so the overlay is styled before the main
        stylesheet arrives (that's the moment it exists to cover). */
@@ -98,6 +98,7 @@
         <a href="#gallery">Gallery</a>
         <a href="#testimonials">Testimonials</a>
         <a href="#faq">FAQ</a>
+        <a href="#areas">Areas</a>
         <a href="#contact">Contact</a>
       </nav>
 
@@ -306,7 +307,7 @@
           </details>
           <details class="faq-item">
             <summary>What areas do you cover?</summary>
-            <p>[Placeholder] We're based in [Town] and cover the surrounding area. If you're not sure whether we reach you, just ask.</p>
+            <p>We're based in Carterton and cover roughly a 15-mile radius across West Oxfordshire and the edge of the Cotswolds &mdash; Witney, Burford, Faringdon, Woodstock and beyond. Not sure whether we reach you? Just ask.</p>
           </details>
           <details class="faq-item">
             <summary>Are you insured?</summary>
@@ -316,6 +317,99 @@
             <summary>How long does a typical project take?</summary>
             <p>[Placeholder] It depends on the job &mdash; a fitted wardrobe might be a few days, a garden room a few weeks. We'll give you a clear timeline with your quote and keep you updated throughout.</p>
           </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- AREAS WE COVER -->
+    <section id="areas" class="section areas">
+      <div class="container">
+        <p class="section-eyebrow center">Where We Work</p>
+        <h2 class="center">Areas We Cover</h2>
+        <p class="section-sub center">Based in Carterton, we cover Witney, Burford and the surrounding West Oxfordshire towns and Cotswold villages &mdash; if you're nearby, we'd love to help.</p>
+
+        <div class="areas-inner">
+          <!-- Stylised coverage map (hand-built graphic, no third-party maps) -->
+          <div class="map-card">
+            <svg viewBox="0 0 520 400" role="img" aria-label="Map showing the area we cover: roughly a 15-mile radius around Carterton in West Oxfordshire">
+              <defs>
+                <radialGradient id="area-cov" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#f4791f" stop-opacity="0.20"/>
+                  <stop offset="70%" stop-color="#f4791f" stop-opacity="0.10"/>
+                  <stop offset="100%" stop-color="#f4791f" stop-opacity="0.03"/>
+                </radialGradient>
+              </defs>
+
+              <!-- land base -->
+              <rect x="0" y="0" width="520" height="400" fill="#eadfca"/>
+              <path d="M0,300 Q120,250 200,290 T400,270 T520,300 L520,400 L0,400 Z" fill="#dfceac"/>
+              <path d="M330,0 Q380,60 430,40 T520,80 L520,0 Z" fill="#e2d3b2"/>
+              <!-- River Thames winding through the SW -->
+              <path d="M60,400 C120,340 90,300 150,270 C210,240 180,200 250,200"
+                    fill="none" stroke="#bcd0d6" stroke-width="9" stroke-linecap="round" opacity="0.8"/>
+              <!-- roads radiating from Carterton -->
+              <g stroke="#cbb994" stroke-width="3" fill="none" opacity="0.9">
+                <path d="M0,150 Q180,140 260,200 T520,190"/>
+                <path d="M260,200 L250,400"/>
+                <path d="M260,200 L470,70"/>
+                <path d="M260,200 L80,330"/>
+              </g>
+
+              <!-- 15-mile coverage radius -->
+              <circle cx="260" cy="200" r="150" fill="url(#area-cov)" stroke="#f4791f" stroke-width="2" stroke-dasharray="7 7" opacity="0.9"/>
+
+              <!-- surrounding towns -->
+              <g fill="#8a5a37">
+                <circle cx="372" cy="172" r="5"/>
+                <circle cx="166" cy="196" r="5"/>
+                <circle cx="256" cy="82" r="5"/>
+                <circle cx="404" cy="112" r="5"/>
+                <circle cx="252" cy="316" r="5"/>
+                <circle cx="140" cy="306" r="5"/>
+              </g>
+              <g fill="#6b6058" font-family="-apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="600">
+                <text x="384" y="176">Witney</text>
+                <text x="158" y="200" text-anchor="end">Burford</text>
+                <text x="256" y="72" text-anchor="middle">Chipping Norton</text>
+                <text x="416" y="116">Woodstock</text>
+                <text x="252" y="336" text-anchor="middle">Faringdon</text>
+                <text x="132" y="310" text-anchor="end">Lechlade</text>
+              </g>
+
+              <!-- Carterton (base) pin -->
+              <g transform="translate(260,200)">
+                <ellipse cx="0" cy="6" rx="12" ry="4" fill="rgba(0,0,0,0.15)"/>
+                <path d="M0,-30 C-14,-30 -22,-20 -22,-8 C-22,6 0,20 0,20 C0,20 22,6 22,-8 C22,-20 14,-30 0,-30 Z" fill="#f4791f"/>
+                <circle cx="0" cy="-9" r="7" fill="#fff"/>
+              </g>
+              <text x="260" y="245" text-anchor="middle" fill="#3b2a1e" font-family="Georgia, serif" font-size="15" font-weight="700">Carterton</text>
+            </svg>
+            <div class="radius-note">Covering roughly a 15-mile radius</div>
+          </div>
+
+          <!-- Areas list -->
+          <div class="areas-list">
+            <h3>Towns &amp; villages we serve</h3>
+            <p>Across West Oxfordshire and the edge of the Cotswolds &mdash; a few of the places we regularly work:</p>
+            <div class="area-chips">
+              <span class="area-chip hub">Carterton</span>
+              <span class="area-chip">Brize Norton</span>
+              <span class="area-chip">Witney</span>
+              <span class="area-chip">Burford</span>
+              <span class="area-chip">Bampton</span>
+              <span class="area-chip">Eynsham</span>
+              <span class="area-chip">Faringdon</span>
+              <span class="area-chip">Charlbury</span>
+              <span class="area-chip">Lechlade</span>
+              <span class="area-chip">Woodstock</span>
+              <span class="area-chip">Chipping Norton</span>
+              <span class="area-chip">Oxford</span>
+            </div>
+            <p class="areas-note">
+              Don't see your area? We travel further for larger projects &mdash;
+              <a href="#contact">just ask for a quote &rarr;</a>
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -401,6 +495,6 @@
     <img class="lightbox-img" src="" alt="">
   </div>
 
-  <script src="js/main.js?v=14"></script>
+  <script src="js/main.js?v=15"></script>
 </body>
 </html>

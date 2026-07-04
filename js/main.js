@@ -101,7 +101,7 @@ mainNav.querySelectorAll('a').forEach((link) => {
 
 // Scroll reveal animation
 const revealTargets = document.querySelectorAll(
-  '.about-inner, .services-grid, .gallery-grid, .testimonial-grid, .faq-list, .contact-inner'
+  '.about-inner, .services-grid, .gallery-grid, .testimonial-grid, .faq-list, .areas-inner, .contact-inner'
 );
 if ('IntersectionObserver' in window) {
   revealTargets.forEach((el) => el.classList.add('reveal'));

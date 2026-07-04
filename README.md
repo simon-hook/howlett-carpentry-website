@@ -24,6 +24,8 @@ The gallery's first three tiles are real before/after projects with a drag-to-co
 - `css/style.css` — all styling
 - `js/main.js` — preloader, count-up stats, scrollspy nav, mobile nav, scroll animations, before/after sliders, lightbox, contact form handling
 
+The "Areas We Cover" section (`#areas`) uses a hand-built SVG coverage map (Carterton centred, ~15-mile radius) plus a chip list of towns — no third-party map service, no API key. To change the coverage, edit the town `<circle>`/`<text>` pairs in the SVG and the `.area-chip` list in `index.html`.
+
 **Cache busting:** the CSS/JS links in `index.html` carry a `?v=N` query string. Bump `N` on both links any time you edit `css/style.css` or `js/main.js`, or returning visitors may keep using the old cached version.
 
 ## Deploying
