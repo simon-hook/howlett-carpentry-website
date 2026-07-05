@@ -25,6 +25,8 @@ The gallery's first three tiles are real before/after projects with a drag-to-co
 - `index.html` — page markup/content
 - `css/style.css` — all styling
 - `js/main.js` — preloader, count-up stats, scrollspy nav, mobile nav, scroll animations, before/after sliders, lightbox, contact form handling
+- `sitemap.xml` / `robots.txt` — search-engine discovery
+- `images/og-image.jpg` — 1200×630 social-share preview image
 
 The "Areas We Cover" section (`#areas`) uses a hand-built SVG coverage map (Carterton centred, ~15-mile radius) plus a chip list of towns — no third-party map service, no API key. To change the coverage, edit the town `<circle>`/`<text>` pairs in the SVG and the `.area-chip` list in `index.html`.
 

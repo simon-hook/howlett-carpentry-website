@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://simon-hook.github.io/howlett-carpentry-website/sitemap.xml
